@@ -11,6 +11,17 @@ public class AutorService {
     @Autowired
     private AutorRepository autorRepository;
 
+    public Autor cadastrarAutor(Autor autor){
+        try {
+            String id_autor = java.util.UUID.randomUUID().toString();
+            autor.setIdAutor(id_autor);
+            autorRepository.save(autor);
+            return autor;
+        }catch (Exception e) {
+            throw new RuntimeException("Erro ao cadastrar autor: " + e.getMessage());
+        }
+    }
+
     public Autor pesquisarAutor(String idAutor) {
         try {
             var autorPesquisado = autorRepository.findById(idAutor).orElse(null);

@@ -12,13 +12,17 @@ public class Autor {
 
     @Column(name = "id")
     @Id
-    private String idAutor;
+    private String id;
     private String nome;
     private String email;
     private String senha;
 
-    public void setIdAutor(String idAutor) {
-        this.idAutor = idAutor;
+    public void setIdAutor(String id) {
+        this.id = id;
+    }
+
+    public String getIdAutor() {
+        return id;
     }
 
     public String getNome() {

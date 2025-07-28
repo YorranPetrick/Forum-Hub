@@ -1,7 +1,7 @@
 package com.yorranpetrick.forumhub.controller;
 
 import com.yorranpetrick.forumhub.models.Autor;
-import com.yorranpetrick.forumhub.repository.AutorRepository;
+import com.yorranpetrick.forumhub.service.AutorService;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -9,24 +9,19 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/autorApi")
 public class AutorController {
 
-    private AutorRepository autorRepository;
+    public AutorService autorService;
 
-    public AutorController(AutorRepository autorRepository) {
-        this.autorRepository = autorRepository;
+    public AutorController(AutorService autorService) {
+        this.autorService = autorService;
     }
-
 
     @PostMapping
     public Autor cadastrarAutor(@RequestBody Autor autor) {
-        String id_autor = java.util.UUID.randomUUID().toString();
-        autor.setIdAutor(id_autor);
-        autorRepository.save(autor);
-        return autor;
-
+       return autorService.cadastrarAutor(autor); // Utiliza o service para cadastrar o autor
     }
 
-    @GetMapping
-    public Autor pesquisarAutor(@RequestParam String idAutor) {
-        return autorRepository.findById(idAutor).orElse(null);
+    @GetMapping("{idAutor}")
+    public Autor pesquisarAutor(@PathVariable("idAutor") String idAutor) {
+        return autorService.pesquisarAutor(idAutor); // Utiliza o service para pesquisar o autor pelo ID
     }
 }

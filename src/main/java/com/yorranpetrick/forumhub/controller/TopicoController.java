@@ -1,8 +1,6 @@
 package com.yorranpetrick.forumhub.controller;
 
 import com.yorranpetrick.forumhub.models.Topico;
-import com.yorranpetrick.forumhub.repository.AutorRepository;
-import com.yorranpetrick.forumhub.repository.TopicoRepository;
 import com.yorranpetrick.forumhub.service.AutorService;
 import com.yorranpetrick.forumhub.service.TopicoService;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +27,10 @@ public class TopicoController {
             throw new RuntimeException("Autor não encontrado com o ID: " + idAutor);
         }
         return topicoService.cadastrarTopico(topico, autor); // Utiliza o service para cadastrar o tópico
+    }
+
+    @GetMapping("{idAutor}")
+    public List<Topico> listarTopicosAutor(@PathVariable("idAutor") String idAutor){
+        return topicoService.listarTopicosAutor(idAutor); // Utiliza o service para listar os tópicos do autor
     }
 }

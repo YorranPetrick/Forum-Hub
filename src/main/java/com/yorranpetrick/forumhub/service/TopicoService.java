@@ -2,15 +2,20 @@ package com.yorranpetrick.forumhub.service;
 
 import com.yorranpetrick.forumhub.models.Autor;
 import com.yorranpetrick.forumhub.models.Topico;
+import com.yorranpetrick.forumhub.repository.AutorRepository;
 import com.yorranpetrick.forumhub.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TopicoService {
 
     @Autowired
     private TopicoRepository topicoRepository;
+    @Autowired
+    private AutorRepository autorRepository;
 
     public Topico cadastrarTopico(Topico topico, Autor autor){
         try {
@@ -21,6 +26,17 @@ public class TopicoService {
             return topico;
         }catch (Exception e) {
             throw new RuntimeException("Erro ao cadastrar tópico: " + e.getMessage());
+        }
+    }
+
+    public List<Topico> listarTopicosAutor(String idAutor){
+        try {
+            var topicos = topicoRepository.findAllByAutorId(idAutor);
+            if (topicos.isEmpty()) {
+                throw new RuntimeException("Nenhum tópico encontrado para o autor com ID: " + idAutor);
+            }else return topicos;
+        }catch (Exception e) {
+            throw new RuntimeException("Erro ao listar tópicos do autor: " + e.getMessage());
         }
     }
 }
