@@ -3,6 +3,8 @@ package com.yorranpetrick.forumhub.controller;
 import com.yorranpetrick.forumhub.models.Topico;
 import com.yorranpetrick.forumhub.repository.AutorRepository;
 import com.yorranpetrick.forumhub.repository.TopicoRepository;
+import com.yorranpetrick.forumhub.service.AutorService;
+import com.yorranpetrick.forumhub.service.TopicoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,25 +13,21 @@ import java.util.List;
 @RequestMapping("/topicoApi")
 
 public class TopicoController {
-    private TopicoRepository topicoRepository;
-    private AutorRepository autorRepository;
 
-    public TopicoController(TopicoRepository topicoRepository, AutorRepository autorRepository) {
-        this.topicoRepository = topicoRepository;
-        this.autorRepository = autorRepository;
+    private AutorService autorService;
+    private TopicoService topicoService;
+
+    public TopicoController(AutorService autorService, TopicoService topicoService) {
+        this.autorService = autorService;
+        this.topicoService = topicoService;
     }
 
-    @PostMapping
-    public Topico cadastrarTopico(@RequestParam String idAutor, @RequestBody Topico topico) {
-        var autor = autorRepository.findById(idAutor).orElse(null);
+    @PostMapping("{idAutor}")
+    public Topico cadastrarTopico(@PathVariable("idAutor") String idAutor, @RequestBody Topico topico) {
+        var autor = autorService.pesquisarAutor(idAutor); // Utiliza o service para pesquisar o autor pelo ID
         if (autor == null) {
             throw new RuntimeException("Autor não encontrado com o ID: " + idAutor);
         }
-
-        String id_topico = java.util.UUID.randomUUID().toString(); // Gera um ID único
-        topico.setIdTopico(id_topico);
-        topico.setAutor(autor);
-        topicoRepository.save(topico);
-        return topico;
+        return topicoService.cadastrarTopico(topico, autor); // Utiliza o service para cadastrar o tópico
     }
 }
