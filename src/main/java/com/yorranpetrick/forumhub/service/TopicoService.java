@@ -14,8 +14,8 @@ public class TopicoService {
 
     @Autowired
     private TopicoRepository topicoRepository;
-    @Autowired
-    private AutorRepository autorRepository;
+    //@Autowired
+    //private AutorRepository autorRepository;
 
     public Topico cadastrarTopico(Topico topico, Autor autor){
         try {
@@ -50,6 +50,18 @@ public class TopicoService {
             }
         }catch (Exception e) {
             throw new RuntimeException("Erro ao listar tópico específico: " + e.getMessage());
+        }
+    }
+    public void deletarTopico(String idTopico) {
+        try {
+            if (idTopico == null || idTopico.isEmpty()) {
+                throw new IllegalArgumentException("ID do tópico não pode ser nulo ou vazio");
+            }
+            if (topicoRepository.findById(idTopico).orElse(null) != null){
+                topicoRepository.deleteById(idTopico);
+            }
+        }catch (Exception e) {
+            throw new RuntimeException("Erro ao deletar tópico: " + e.getMessage());
         }
     }
 }

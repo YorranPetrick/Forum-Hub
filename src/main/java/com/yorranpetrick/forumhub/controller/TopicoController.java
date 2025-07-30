@@ -38,4 +38,9 @@ public class TopicoController {
     public Topico listarTopicoEspecifico(@PathVariable("idTopico") String idTopico){
         return topicoService.listarTopicoEsperifico(idTopico); // Utiliza o service para listar o tópico específico
     }
+
+    @DeleteMapping("/deletar-topico/{idTopico}")
+    public void deteleTopico(@PathVariable("idTopico") String idTopico) {
+        topicoService.deletarTopico(idTopico);
+    }
 }
