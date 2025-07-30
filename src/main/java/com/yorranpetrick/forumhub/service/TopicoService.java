@@ -39,4 +39,17 @@ public class TopicoService {
             throw new RuntimeException("Erro ao listar tópicos do autor: " + e.getMessage());
         }
     }
+
+    public Topico listarTopicoEsperifico(String idTopico){
+        try {
+            var topico = topicoRepository.findById(idTopico).orElse(null);
+            if(topico == null){
+                throw new RuntimeException("Tópico não encontrado com o ID: " + idTopico);
+            } else {
+                return topico;
+            }
+        }catch (Exception e) {
+            throw new RuntimeException("Erro ao listar tópico específico: " + e.getMessage());
+        }
+    }
 }

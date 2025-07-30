@@ -33,4 +33,9 @@ public class TopicoController {
     public List<Topico> listarTopicosAutor(@PathVariable("idAutor") String idAutor){
         return topicoService.listarTopicosAutor(idAutor); // Utiliza o service para listar os tópicos do autor
     }
+
+    @GetMapping("/topico-especifico/{idTopico}")
+    public Topico listarTopicoEspecifico(@PathVariable("idTopico") String idTopico){
+        return topicoService.listarTopicoEsperifico(idTopico); // Utiliza o service para listar o tópico específico
+    }
 }
