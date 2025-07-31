@@ -43,4 +43,9 @@ public class TopicoController {
     public void deteleTopico(@PathVariable("idTopico") String idTopico) {
         topicoService.deletarTopico(idTopico);
     }
+
+    @PutMapping("/atualizar-topico/{idTopico}")
+    public void atualizarTopico(@PathVariable String idTopico, @RequestBody Topico topico) {
+        topicoService.atualizarTopico(topico, idTopico);
+    }
 }

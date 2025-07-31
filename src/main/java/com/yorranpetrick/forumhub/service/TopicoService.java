@@ -2,7 +2,6 @@ package com.yorranpetrick.forumhub.service;
 
 import com.yorranpetrick.forumhub.models.Autor;
 import com.yorranpetrick.forumhub.models.Topico;
-import com.yorranpetrick.forumhub.repository.AutorRepository;
 import com.yorranpetrick.forumhub.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,6 @@ public class TopicoService {
 
     @Autowired
     private TopicoRepository topicoRepository;
-    //@Autowired
-    //private AutorRepository autorRepository;
 
     public Topico cadastrarTopico(Topico topico, Autor autor){
         try {
@@ -62,6 +59,18 @@ public class TopicoService {
             }
         }catch (Exception e) {
             throw new RuntimeException("Erro ao deletar tópico: " + e.getMessage());
+        }
+    }
+
+    public void atualizarTopico(Topico novoTopico, String idTopico) {
+        try{
+            var topicoIdentificado = listarTopicoEsperifico(idTopico);
+            novoTopico.setIdTopico(idTopico); //Salvando o Id do antigo topico no novo
+            novoTopico.setAutor(topicoIdentificado.getAutor()); //Salvando o autor que realizou o tópico no novo tópico
+            topicoRepository.save(novoTopico);
+
+        }catch (Exception e){
+            throw new RuntimeException("Erro ao atualizar tópico: " + e.getMessage());
         }
     }
 }
