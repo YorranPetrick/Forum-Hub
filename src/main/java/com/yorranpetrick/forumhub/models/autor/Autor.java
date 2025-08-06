@@ -1,10 +1,7 @@
 package com.yorranpetrick.forumhub.models.autor;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Table(name = "autor")
 @Entity
@@ -16,7 +13,8 @@ public class Autor {
     private String nome;
     private String email;
     private String senha;
-    private String tipoUsuario;
+    @Enumerated(EnumType.STRING)
+    private TiposAutores tipoUsuario;
 
     public void setIdAutor(String id) {
         this.id = id;
@@ -38,5 +36,5 @@ public class Autor {
         return senha;
     }
 
-    public String getTipoUsuario() {return tipoUsuario;}
+    public TiposAutores getTipoUsuario() {return tipoUsuario;}
 }

@@ -19,7 +19,10 @@ public class AutorController {
 
     @PostMapping
     public Autor cadastrarAutor(@RequestBody Autor autor) {
-       return autorService.cadastrarAutor(autor); // Utiliza o service para cadastrar o autor
+        if (autorService.validacaoTipoAutor(autor)){
+            return autorService.cadastrarAutor(autor); // Utiliza o service para cadastrar o autor
+        }
+        return null;
     }
 
     @GetMapping("{idAutor}")
