@@ -1,6 +1,6 @@
 package com.yorranpetrick.forumhub.repository;
 
-import com.yorranpetrick.forumhub.models.Topico;
+import com.yorranpetrick.forumhub.models.topico.Topico;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

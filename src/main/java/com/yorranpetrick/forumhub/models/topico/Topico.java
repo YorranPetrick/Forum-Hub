@@ -1,6 +1,7 @@
-package com.yorranpetrick.forumhub.models;
+package com.yorranpetrick.forumhub.models.topico;
 
 
+import com.yorranpetrick.forumhub.models.autor.Autor;
 import jakarta.persistence.*;
 
 @Table(name = "topico")

@@ -1,9 +1,11 @@
 package com.yorranpetrick.forumhub.service;
 
-import com.yorranpetrick.forumhub.models.Autor;
+import com.yorranpetrick.forumhub.models.autor.Autor;
 import com.yorranpetrick.forumhub.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AutorService {
@@ -31,6 +33,19 @@ public class AutorService {
             return autorPesquisado;
         }catch (Exception e) {
             throw new RuntimeException("Erro ao pesquisar autor: " + e.getMessage());
+        }
+    }
+
+    public List<Autor> listarAutores(String idUsuarioLogado) {
+        try {
+            var usuario = pesquisarAutor(idUsuarioLogado);
+            if(usuario.getTipoUsuario().equals("ADMINISTRADOR")) {
+                return autorRepository.findAll();
+            } else {
+                throw new RuntimeException("Usuário não tem permissão para listar autores.");
+            }
+        }catch (Exception e) {
+            throw new RuntimeException("Erro ao listar autores: " + e.getMessage());
         }
     }
 }

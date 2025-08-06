@@ -1,4 +1,4 @@
-package com.yorranpetrick.forumhub.models;
+package com.yorranpetrick.forumhub.models.autor;
 
 
 import jakarta.persistence.Column;
@@ -16,6 +16,7 @@ public class Autor {
     private String nome;
     private String email;
     private String senha;
+    private String tipoUsuario;
 
     public void setIdAutor(String id) {
         this.id = id;
@@ -36,4 +37,6 @@ public class Autor {
     public String getSenha() {
         return senha;
     }
+
+    public String getTipoUsuario() {return tipoUsuario;}
 }

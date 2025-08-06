@@ -1,7 +1,7 @@
 package com.yorranpetrick.forumhub.service;
 
-import com.yorranpetrick.forumhub.models.Autor;
-import com.yorranpetrick.forumhub.models.Topico;
+import com.yorranpetrick.forumhub.models.autor.Autor;
+import com.yorranpetrick.forumhub.models.topico.Topico;
 import com.yorranpetrick.forumhub.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

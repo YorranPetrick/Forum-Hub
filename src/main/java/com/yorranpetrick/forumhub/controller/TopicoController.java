@@ -1,6 +1,6 @@
 package com.yorranpetrick.forumhub.controller;
 
-import com.yorranpetrick.forumhub.models.Topico;
+import com.yorranpetrick.forumhub.models.topico.Topico;
 import com.yorranpetrick.forumhub.service.AutorService;
 import com.yorranpetrick.forumhub.service.TopicoService;
 import org.springframework.web.bind.annotation.*;
