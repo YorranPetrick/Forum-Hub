@@ -4,7 +4,6 @@ import com.yorranpetrick.forumhub.models.autor.Autor;
 import com.yorranpetrick.forumhub.models.autor.TiposAutores;
 import com.yorranpetrick.forumhub.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
