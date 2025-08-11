@@ -1,3 +1,4 @@
+/*
 package com.yorranpetrick.forumhub.configuration;
 
 
@@ -16,7 +17,7 @@ public class Securityconfiguration {
 
     // Este bean define toda a configuração de segurança HTTP da aplicação
     @Bean
-    private SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // Configura a autorização das requisições HTTP
         http.authorizeHttpRequests(authorize ->
@@ -31,11 +32,10 @@ public class Securityconfiguration {
                 // Customizer.withDefaults() -> usa as configurações padrão
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
 
-                // Define a política de criação de sessão
                 // STATELESS -> não mantém estado de sessão no servidor (importante para APIs REST)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // Retorna o objeto configurado para o Spring usar na proteção da aplicação
         return http.build();
     }
 }
+*/

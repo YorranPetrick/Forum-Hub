@@ -3,6 +3,7 @@ package com.yorranpetrick.forumhub.controller;
 import com.yorranpetrick.forumhub.models.topico.Topico;
 import com.yorranpetrick.forumhub.service.AutorService;
 import com.yorranpetrick.forumhub.service.TopicoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,22 +31,29 @@ public class TopicoController {
     }
 
     @GetMapping("{idAutor}")
-    public List<Topico> listarTopicosAutor(@PathVariable("idAutor") String idAutor){
-        return topicoService.listarTopicosAutor(idAutor); // Utiliza o service para listar os tópicos do autor
+    public ResponseEntity<List<Topico>> listarTopicosAutor(@PathVariable("idAutor") String idAutor){
+        var topicos =  topicoService.listarTopicosAutor(idAutor); // Utiliza o service para listar os tópicos do autor
+        return ResponseEntity.ok(topicos);
     }
 
     @GetMapping("/topico-especifico/{idTopico}")
-    public Topico listarTopicoEspecifico(@PathVariable("idTopico") String idTopico){
-        return topicoService.listarTopicoEsperifico(idTopico); // Utiliza o service para listar o tópico específico
+    public ResponseEntity<Topico> listarTopicoEspecifico(@PathVariable("idTopico") String idTopico){
+        var topico = topicoService.listarTopicoEsperifico(idTopico); // Utiliza o service para listar o tópico específico
+        return ResponseEntity.ok(topico); // Retorna o tópico encontrado
     }
 
+
     @DeleteMapping("/deletar-topico/{idTopico}")
-    public void deteleTopico(@PathVariable("idTopico") String idTopico) {
+    public ResponseEntity deteleTopico(@PathVariable("idTopico") String idTopico) {
         topicoService.deletarTopico(idTopico);
+
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/atualizar-topico/{idTopico}")
-    public void atualizarTopico(@PathVariable String idTopico, @RequestBody Topico topico) {
+    public ResponseEntity atualizarTopico(@PathVariable String idTopico, @RequestBody Topico topico) {
         topicoService.atualizarTopico(topico, idTopico);
+
+        return ResponseEntity.ok().build();
     }
 }
