@@ -1,5 +1,6 @@
 package com.yorranpetrick.forumhub.service;
 
+import com.yorranpetrick.forumhub.configuration.security.SecurityConfiguration;
 import com.yorranpetrick.forumhub.models.autor.Autor;
 import com.yorranpetrick.forumhub.models.autor.TiposAutores;
 import com.yorranpetrick.forumhub.repository.AutorRepository;
@@ -9,15 +10,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AutorService {
+public class AutorService { // Implementa UserDetailsService para integração com Spring Security
 
     @Autowired
     private AutorRepository autorRepository;
+    @Autowired
+    private SecurityConfiguration securityConfiguration;
 
     public Autor cadastrarAutor(Autor autor){
         try {
             String id_autor = java.util.UUID.randomUUID().toString();
             autor.setIdAutor(id_autor);
+            var senhaCriptografada = securityConfiguration.passwordEncoder().encode(autor.getSenha());
+            autor.setSenha(senhaCriptografada);
             autorRepository.save(autor);
             return autor;
         }catch (Exception e) {
@@ -59,4 +64,5 @@ public class AutorService {
             throw new IllegalArgumentException("Tipo de Autor Invalido, Verifique os Tipos Disponiveis e tente novamente : " + e.getMessage());
         }
     }
+
 }

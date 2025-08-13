@@ -25,6 +25,7 @@ public class AutorController {
         return null;
     }
 
+
     @GetMapping("{idAutor}")
     public Autor pesquisarAutor(@PathVariable("idAutor") String idAutor) {
         return autorService.pesquisarAutor(idAutor); // Utiliza o service para pesquisar o autor pelo ID
