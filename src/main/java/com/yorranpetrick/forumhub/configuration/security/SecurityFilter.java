@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -11,6 +12,9 @@ import java.io.IOException;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private TokenConfiguration tokenConfiguration;
 
     // Este filtro é responsável por interceptar as requisições HTTP e realizar a autenticação do usuário
     @Override
@@ -21,6 +25,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         //FilterChain é a cadeia de filtros que a requisição vai passar
 
         var tokenJWT = recuperarToken(request);
+        var subject = tokenConfiguration.getSubject(tokenJWT);
+
         filterChain.doFilter(request, response); // Continua a cadeia de filtros
 
     }

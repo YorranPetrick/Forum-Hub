@@ -2,6 +2,7 @@ package com.yorranpetrick.forumhub.configuration.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,7 +23,12 @@ public class SecurityConfiguration {
 
         http.csrf(csrf -> csrf.disable()) // Desabilita a proteção CSRF
                 .sessionManagement((session) -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/autorApi").permitAll() // Permite acesso à rota de login e o metodo POST de autorApi sem autenticação
+                        .anyRequest() //Bloqueia todas as outras requisições
+                        .authenticated());
 
         return http.build();
     }

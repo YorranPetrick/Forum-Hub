@@ -3,6 +3,7 @@ package com.yorranpetrick.forumhub.configuration.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.yorranpetrick.forumhub.models.autor.Autor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,22 @@ public class TokenConfiguration {
 
         } catch (JWTCreationException e) {
             throw new RuntimeException("erro ao gerar token jwt : " + e);
+        }
+    }
+
+    public String getSubject(String tokenJWT){
+        //Decodificando o Token JWT para obter o assunto (subject)
+        //O assunto é o nome do usuário que foi autenticado
+        try {
+            var algoritmo = Algorithm.HMAC256(secret);
+            return JWT.require(algoritmo)
+                    .withIssuer("ForumHub")
+                    .build()
+                    .verify(tokenJWT)
+                    .getSubject();
+
+        } catch (JWTVerificationException e) {
+            throw new RuntimeException("Token JWT inválido ou expirado!");
         }
     }
 
