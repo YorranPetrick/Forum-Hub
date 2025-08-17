@@ -1,5 +1,8 @@
 package com.yorranpetrick.forumhub.controller;
 
+import com.yorranpetrick.forumhub.configuration.security.DadosTokenJWT;
+import com.yorranpetrick.forumhub.configuration.security.TokenConfiguration;
+import com.yorranpetrick.forumhub.models.autor.Autor;
 import com.yorranpetrick.forumhub.models.autor.DadosAutenticacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,8 @@ public class AutenticacaoController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private TokenConfiguration tokenConfiguration;
 
 
     @PostMapping
@@ -24,6 +29,8 @@ public class AutenticacaoController {
         var token = new UsernamePasswordAuthenticationToken(dadosAutenticacao.nome(), dadosAutenticacao.senha());
         var autenticacao = authenticationManager.authenticate(token);
 
-        return ResponseEntity.ok().build();
+        var tokenJWT = tokenConfiguration.gerarToken((Autor) autenticacao.getPrincipal());
+
+        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
 }
